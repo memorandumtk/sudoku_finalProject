@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku</title>
+    <style>
+        input {
+            width: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <table border="2">
+
+        <tbody>
+            <!-- 9[9x9]x9[9x9] -->
+
+
+        </tbody>
+
+    </table>
+
+
+
+</body>
+<script>
+    generateTable();
+    // loading JSON info
+    // const loadBoard = (boardData) => {
+    //     console.log(boardData);
+    // }
+    // const errorFun = (msg) => {
+    //     alert(msg);
+    // }
+    // let loadPromise = new Promise((load, error) => {
+    //     let httpReq = new XMLHttpRequest();
+    //     httpReq.onload = () => {
+    //         if (httpReq.status == 200)
+    //             load(httpReq.response);
+    //         else
+    //             error(httpReq.statusText);
+    //     }
+    //     httpReq.open("GET", "board.json");
+    //     httpReq.send();
+    // }).then(loadBoard, errorFun);
+
+    // generating table
+    // generating table
+    function generateTable() {
+        let tbody = document.querySelector('tbody');
+        // loop for whole table body
+        for (let b = 0; b < 3; b++) {
+            for (let i = 0; i < 3; i++) {
+                let tr = document.createElement("tr");
+                // loop for a tr
+                for (let a = 0; a < 3; a++) {
+                    //creating small three td in row
+                    for (let j = 0; j < 3; j++) {
+                        let box = document.createElement("td");
+                        // input text to box in order of loop variable
+                        box.innerText = a
+                        tr.appendChild(box);
+                    }
+                }
+                tbody.appendChild(tr)
+            }
+        }
+    }
+
+
+</script>
+
+</html>

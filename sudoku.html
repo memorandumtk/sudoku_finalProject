@@ -1,11 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sudoku</title>
+    <style>
+        .inputStyle {
+            width: 40px;
+        }
+    </style>
 </head>
+
+
 <body>
-    
+    <!-- 
+        [{232324327};
+        {113214227};
+        {125317331};
+        {111229234};
+        {125138338};
+        {238323336};
+        {138234236};
+        {319321336};
+        {124211228};]
+
+
+
+[234317],
+[321],
+
+
+mockdata json
+first number >> x axis
+second number >> y axis
+third number >> input value -->
+
+    <table border="1">
+
+        <tbody>
+
+
+        </tbody>
+
+    </table>
+
+
+
 </body>
+<script>
+    generateTable();
+    // loading JSON info
+    // const loadBoard = (boardData) => {
+    //     console.log(boardData);
+    // }
+    // const errorFun = (msg) => {
+    //     alert(msg);
+    // }
+    // let loadPromise = new Promise((load, error) => {
+    //     let httpReq = new XMLHttpRequest();
+    //     httpReq.onload = () => {
+    //         if (httpReq.status == 200)
+    //             load(httpReq.response);
+    //         else
+    //             error(httpReq.statusText);
+    //     }
+    //     httpReq.open("GET", "board.json");
+    //     httpReq.send();
+    // }).then(loadBoard, errorFun);
+
+    // generating table
+    function generateTable() {
+        let tbody = document.querySelector('tbody');
+        for (let i = 0; i < 9; i++) {
+            //big boxes [9]
+            let trBigBoxes = document.createElement("tr");
+            trBigBoxes.classList.add("trBigBoxes");
+            tbody.appendChild(trBigBoxes);
+            for (let j = 0; j < 3; j++) {
+                //boxes rows [3x3]
+                let tdSmallBoxes = document.createElement("td");
+                tdSmallBoxes.classList.add("tdSmallBoxes")
+                trBigBoxes.appendChild(tdSmallBoxes);
+                for (let k = 0; k < 3; k++) {
+                    //boxes columns [3x3]
+                    let smallBox = document.createElement("input");
+                    tdSmallBoxes.appendChild(smallBox);
+                    fillNumbersIntoTheBoxes();
+
+                }
+            }
+        }
+    }
+
+    //printing the numbers.
+    function fillNumbersIntoTheBoxes() {
+        let allBoxes = document.getElementsByTagName("input");
+        for (let i = 0; i < allBoxes.length; i++) {
+            allBoxes[i].setAttribute("type", "number");
+            allBoxes[i].classList.add("inputStyle")
+            allBoxes[i].min = 1;
+            allBoxes[i].max = 9;
+            allBoxes[i].size = 1;
+            allBoxes[i].addEventListener("input", function () {    //this event listener do that we only can write one number
+                if (this.value.length > 1) {                      //checks if the length of the value is more than 1, and then if it is bigger
+                    this.value = this.value.slice(0, 1);        // splice the number and gets the first one
+                    validateSudoku();
+                    console.log("validate executed")
+                }
+            });
+        }
+    }
+
+    function validateSudoku() {
+        let allBoxes = document.querySelectorAll("input");
+        for (let box of allBoxes) {
+            //check x-axis box's value
+            for (let i = 0; i < 9; i++) {
+                let boxArray = [];
+                boxArray.push(box[i].value)
+                for(let num of boxArray){
+                   if(boxArray.indexOf(num) != -1)
+                   console.log("Not correct input")
+                }
+            }
+        }
+    }
+    // function randomNumberInput(){
+    //     let allBoxes = document.getElementsByTagName("input");
+    //     const randumBT = document.createElement('button');
+    //     randumBT.type = "button";
+    //     ran
+    //     }
+
+    function saveonArrays() {
+        let arrAll = [];
+        let allBoxes = document.getElementsByClassName("inputStyle");
+        for (let i = 0; i < allBoxes.length; i++) {
+            arrAll[i] = Number(allBoxes[i].value);
+        }
+        console.log("all: " + arrAll);
+        return arrAll;
+    }
+
+    function validate() {
+        let array = saveonArrays();
+        let isValid = true;
+        //validate if in the first 9 numbers are any repeated
+        for (let i = 0; i < 8; i++) {
+            for (let j = i + 1; j <= 8; j++) {
+                if (array[i] == array[j]) {
+                    console.clear;
+                    console.log("repeated num: "+array[i]);
+                    isValid = false;
+                }
+            }
+        }
+        //validate the other numbers.
+
+    }
+
+
+</script>
+
 </html>
