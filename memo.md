@@ -11,11 +11,17 @@
 
 
 
-## What we did on Nov/13 2PM - 6PM
+## Nov/13 2PM - 6PM by Nacho, Bernardo, Kosuke
 - Creating 9*9*9 table by nacho.
 - Creating function to control input value on table cell from 1 to 9 only.
     - Using addEventLister "input"
 - Discuss about Json and how should we validate.
     - It must receive json file from teacher.
+
+
+## Nov/17 11AM - 5PM by Nacho, Bernardo, Kosuke
+- Creating function to read mockdata JSON by Kosuke.
+- Inputting the data into the table by Nacho.
+- Changing all of table celles to 'input' elements and controling the input value by Bernardo.
 
 
