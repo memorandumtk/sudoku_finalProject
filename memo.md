@@ -22,6 +22,10 @@
 ## Nov/17 11AM - 5PM by Nacho, Bernardo, Kosuke
 - Creating function to read mockdata JSON by Kosuke.
 - Inputting the data into the table by Nacho.
-- Changing all of table celles to 'input' elements and controling the input value by Bernardo.
+- Changing all of table celles to 'input' elements and controling the input value by Bernardo.  
 
+### Function and Button summary
+https://docs.google.com/presentation/d/150x-wh7VuQRDGuXWKljX3wWN17TXVcbuQKkB0QS1-lY/edit#slide=id.g29e3089a8dd_0_122
 
+### Working hour
+https://docs.google.com/spreadsheets/d/1xpoMse_rHVT-xp0ZvKUWJu9LpvLppohXdgJakFBSkTw/edit#gid=0

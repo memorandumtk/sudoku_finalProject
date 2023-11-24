@@ -53,7 +53,7 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-outline-danger" disabled>validate</button>
+    <button type="button" class="btn btn-outline-danger">validate</button>
     <button type="button" class="btn btn-outline-danger">randum</button>
 </body>
 
@@ -135,19 +135,22 @@
             cells[cellIndex].value = coord.value;
         });
     }
+
+    // Function for splitiing each of mockdata the creating new array 'splitedMockdata'
     function mockdataSplit(data) {
         // console.log(data);
         for (let d of data) {
-            d = d.split("");
+            d = d.split(""); // this can make string to array having sepalated each charactor
             splitedMockdata.push(d);
         }
         return splitedMockdata;
     }
 
     // loading JSON info
+    // It is a function to load json from Nov 16's class code.
     const load = () => {
         let loadJson = new Promise((res, rej) => {
-            $.getJSON("./MOCK_DATA.json", (data, status, xhr) => {
+            $.getJSON("./MOCK_DATA_TEST.json", (data, status, xhr) => {
                 if (status == "success") {
                     $.each(data, (idx, value) => {
                         $.each(value, (key, val) => {
@@ -156,26 +159,100 @@
                     });
                     let modifiedMockdata = [];
                     modifiedMockdata = mockdataSplit(mockdata);
-                    // console.log(modifiedMockdata);
                     res(modifiedMockdata);
                 } else {
                     rej(status);
                 }
             }).then(generateEmptySudokuBoard, (reason) => {
-                alert(reason);
+                alert(reason.statusText); // loggin status text if there is failed to load json
             });
         });
     };
     load();
 
-    // for test
-    $("button").on("click", () => {
+    // Function producing random value for test
+    $("button").eq(1).on("click", randomValue)
+    function randomValue() {
         for (let input of $("input")) {
-            input.value = (Math.floor(Math.random() * 9) + 1);
+            input.value = (Math.floor(Math.random() * 9) + 1); // random value from 1 to 9
         }
+    }
+
+    // Validation section
+    let sudokuArray = [] // 2D array for storing each input elements
+    // Function create validate array
+    function createSudokuArray() {
+        // const inputs = Object.values(document.querySelectorAll("input"))
+        const inputs = Object.values(document.querySelectorAll("input"))
+        sudokuArray = [] //for second time click
+        let index = 0;
+        for (let idx in inputs) {
+            if (idx % 9 === 0) {
+                sudokuArray.push([]);
+            }
+            index = Math.floor(idx / 9);
+            sudokuArray[index].push(inputs[idx])
+        }
+    }
+    // I referred this site for validation.
+    // https://dev.to/kaxmoglan/valid-sudoku-solution-in-js-gne
+    function validateValue() {
+        // just create three array for validating
+        let rows = [];
+        let columns = [];
+        let boxes = [];
+        for (let a = 0; a < 9; a++) {
+            rows.push([]);
+            columns.push([]);
+            boxes.push([]);
+        }
+        let wrongInput = []
+        for (let i = 0; i < sudokuArray.length; i++) {
+            for (let j = 0; j < sudokuArray.length; j++) {
+                let input = sudokuArray[i][j].value; // inserting the value of input in sudokuArray
+                if (input != "") {
+                    if (columns[i].includes(input)) {
+                        //insert coodination to wrongInput array that can be the result of this function.
+                        wrongInput.push(i, j); 
+                        return wrongInput;
+                    } else columns[i].push(input);
+
+                    if (rows[j].includes(input)) {
+                        wrongInput.push(i, j);
+                        return wrongInput;
+                    } else rows[j].push(input);
+
+                    let boxIndex = Math.floor((i / 3)) * 3 + Math.floor(j / 3);
+
+                    if (boxes[boxIndex].includes(input)) {
+                        wrongInput.push(i, j);
+                        return wrongInput;
+                    } else boxes[boxIndex].push(input);
+
+                }
+            }
+        }
+        return true;
+    }
+
+    // Highlight function if there is wrong value
+    function highlight(result) {
+        const inputs = document.querySelectorAll("input")
+        for (let input of inputs) { // remove background color for after second click
+            input.style.backgroundColor = ""
+        }
+        let index = (result[0] * 9) + result[1]; //result[0] is 'i', result[1] is 'j' in validateValue function
+        inputs[index].style.backgroundColor = "yellow";
+        alert("x-axis: " + result[0] + ", y-axis: " + result[1] + " is overlapped!")
+    }
+
+    document.querySelectorAll("button")[0].addEventListener("click", () => {
+        createSudokuArray();
+        let result = validateValue();
+        // execute a hishlight function depends on the result of validateValue function
+        result === true ? alert("Complete!") : highlight(result);
     })
 
-    console.log($("input"))
 
 </script>
 
